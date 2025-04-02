@@ -1,5 +1,7 @@
 # hyperf mongodb pool
 
+# 只适用于hyperf3.1版本
+
 ```
 composer require goletter/hyperf-mongodb
 
