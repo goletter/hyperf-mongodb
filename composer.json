@@ -7,6 +7,12 @@
       "email": "goletter@outlook.com"
     }
   ],
+  "keywords": [
+    "php",
+    "hyperf",
+    "filter"
+  ],
+  "description": "mongodb component for hyperf",
   "require": {
     "php": ">=8.1",
     "psr/container": ">1.0",
