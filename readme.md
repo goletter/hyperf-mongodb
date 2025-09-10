@@ -10,19 +10,11 @@ php bin/hyperf.php vendor:publish "goletter/hyperf-mongodb"
 
 # 动态切换连接池
 ```php
-    /**
-     * @Inject
-     * @var ConfigInterface
-     */
-    protected $config;
+    #[Inject]
+    protected ConfigInterface $config;
 
-
-    /**
-     * @Inject()
-     * @var MongoDb
-     */
-    protected $mongoDbClient;
-
+    #[Inject]
+    protected MongoDb $mongoDbClient;
 
     
     # 使用方式
@@ -74,11 +66,8 @@ return [
 使用注解，自动加载 
 **\Goletter\Mongodb\MongoDb** 
 ```php
-/**
- * @Inject()
- * @var MongoDb
-*/
- protected $mongoDbClient;
+    #[Inject]
+    protected MongoDb $mongoDbClient;
 ```
 
 #### **tips:** 
@@ -89,8 +78,8 @@ return [
 单个添加
 ```php
 $insert = [
-            'account' => '',
-            'password' => ''
+     'account' => '',
+     'password' => ''
 ];
 $this->mongoDbClient->insert('fans',$insert);
 ```
@@ -98,14 +87,14 @@ $this->mongoDbClient->insert('fans',$insert);
 批量添加
 ```php
 $insert = [
-            [
-                'account' => '',
-                'password' => ''
-            ],
-            [
-                'account' => '',
-                'password' => ''
-            ]
+        [
+            'account' => '',
+            'password' => ''
+        ],
+        [
+            'account' => '',
+            'password' => ''
+        ]
 ];
 $this->mongoDbClient->insertAll('fans',$insert);
 ```
@@ -191,21 +180,21 @@ $count = $this->mongoDbClient->count('fans', $filter);
 ```php
 
 $pipeline= [
-            [
-                '$match' => $where
-            ], [
-                '$group' => [
-                    '_id' => [],
-                    'groupCount' => [
-                        '$sum' => '$groupCount'
-                    ]
-                ]
-            ], [
-                '$project' => [
-                    'groupCount' => '$groupCount',
-                    '_id' => 0
+        [
+            '$match' => $where
+        ], [
+            '$group' => [
+                '_id' => [],
+                'groupCount' => [
+                    '$sum' => '$groupCount'
                 ]
             ]
+        ], [
+            '$project' => [
+                'groupCount' => '$groupCount',
+                '_id' => 0
+            ]
+        ]
 ];
 
 $count = $this->mongoDbClient->command('fans', $pipeline);
