@@ -1,6 +1,7 @@
 {
   "name": "goletter/hyperf-mongodb",
-  "license": "Apache-2.0",
+  "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "goletter",
@@ -10,7 +11,7 @@
   "keywords": [
     "php",
     "hyperf",
-    "filter"
+    "mongodb"
   ],
   "description": "mongodb component for hyperf",
   "require": {

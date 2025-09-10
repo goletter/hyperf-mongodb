@@ -189,7 +189,7 @@ class MongoDbConnection extends Connection implements ConnectionInterface
             $bulk = new BulkWrite($options);
             $insertId = (string)$bulk->insert($data);
             $written = new WriteConcern(WriteConcern::MAJORITY, 1000);
-            $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, $written);
+            $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, ['writeConcern' => $written]);
         } catch (\Exception $e) {
             $insertId = false;
             throw new MongoDBException($e->getFile() . $e->getLine() . $e->getMessage());
@@ -223,7 +223,7 @@ class MongoDbConnection extends Connection implements ConnectionInterface
                 ['upsert' => true]
             );
             $written = new WriteConcern(WriteConcern::MAJORITY, 1000);
-            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, $written);
+            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, ['writeConcern' => $written]);
             $insertId = $result->getUpsertedIds();
         } catch (\Exception $e) {
             $insertId = false;
@@ -256,7 +256,7 @@ class MongoDbConnection extends Connection implements ConnectionInterface
                 $insertId[] = (string)$bulk->insert($items);
             }
             $written = new WriteConcern(WriteConcern::MAJORITY, 1000);
-            $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, $written);
+            $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, ['writeConcern' => $written]);
         } catch (\Exception $e) {
             $insertId = false;
             throw new MongoDBException($e->getFile() . $e->getLine() . $e->getMessage());
@@ -295,7 +295,7 @@ class MongoDbConnection extends Connection implements ConnectionInterface
                 ['multi' => true, 'upsert' => false]
             );
             $written = new WriteConcern(WriteConcern::MAJORITY, 1000);
-            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, $written);
+            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, ['writeConcern' => $written]);
             $modifiedCount = $result->getModifiedCount();
             $update = $modifiedCount == 0 ? false : true;
         } catch (\Exception $e) {
@@ -336,7 +336,7 @@ class MongoDbConnection extends Connection implements ConnectionInterface
                 ['multi' => false, 'upsert' => false]
             );
             $written = new WriteConcern(WriteConcern::MAJORITY, 1000);
-            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, $written);
+            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, ['writeConcern' => $written]);
             $modifiedCount = $result->getModifiedCount();
             $update = $modifiedCount == 1 ? true : false;
         } catch (\Exception $e) {
@@ -372,7 +372,7 @@ class MongoDbConnection extends Connection implements ConnectionInterface
                 $opts
             );
             $written = new WriteConcern(WriteConcern::MAJORITY, 1000);
-            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, $written);
+            $result = $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, ['writeConcern' => $written]);
             $modifiedCount = $result->getModifiedCount();
             $update = $modifiedCount == 1 ? true : false;
         } catch (\Exception $e) {
@@ -404,7 +404,7 @@ class MongoDbConnection extends Connection implements ConnectionInterface
             $bulk = new BulkWrite;
             $bulk->delete($filter, ['limit' => $limit]);
             $written = new WriteConcern(WriteConcern::MAJORITY, 1000);
-            $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, $written);
+            $this->connection->executeBulkWrite($this->config['db'] . '.' . $namespace, $bulk, ['writeConcern' => $written]);
             $delete = true;
         } catch (\Exception $e) {
             $delete = false;
